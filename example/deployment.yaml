@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-secret-example-deployment
+  labels:
+    app: k8s-secret-example
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: k8s-secret-example
+  template:
+    metadata:
+      labels:
+        app: k8s-secret-example
+    spec:
+      containers:
+      - name: springboot-k8s-secret-example
+        imagePullPolicy: Always
+        image:  kadeksuryam/spring-boot-k8s-secret-example:latest
+        env:
+        - name: KUBERNETES_SECRET_PATH
+          value: "/etc/secret/"
+        volumeMounts:
+        - name: weatherapikey
+          mountPath: "/etc/secret"
+          readOnly: true
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 3
+      volumes:
+      - name: weatherapikey
+        secret:
+          secretName: weatherapikey
+          items:
+          - key: API_KEY
+            path: weather_api_key
+

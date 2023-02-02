@@ -1,0 +1,9 @@
+// package main
+
+// type KubeArmorPolicy struct {
+// 	apiVersion string
+// 	kind string
+// 	metadata struct {
+
+// 	}
+// }

@@ -1,0 +1,15 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: weather-service-disable-secret-access
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: k8s-secret-example
+  file:
+    matchDirectories:
+    - dir: /etc/secret/
+      recursive: true
+  action:
+    Block
