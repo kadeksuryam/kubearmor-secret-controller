@@ -7,9 +7,17 @@ spec:
   selector:
     matchLabels:
       app: k8s-secret-example
+  # process:
+  #   matchDirectories:
+  #   - dir: /sbin/
+  #     recursive: true
   file:
     matchDirectories:
     - dir: /etc/secret/
       recursive: true
+      fromSource:
+      - path: /bin/ls
+      - path: /bin/cat
+      - path: 
   action:
     Block

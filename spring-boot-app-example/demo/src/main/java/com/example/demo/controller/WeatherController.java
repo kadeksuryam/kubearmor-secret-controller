@@ -5,9 +5,8 @@ import com.example.demo.dto.GetWeatherResDTO;
 import com.example.demo.outbound.RestService;
 import com.example.demo.outbound.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
@@ -24,5 +23,16 @@ public class WeatherController {
         resDTO.setHumidity(outboundResDTO.getCurrent().getHumidity());
 
         return resDTO;
+    }
+
+    @GetMapping("/greeting")
+    public String greetingForm(Model model) {
+        model.addAttribute("greeting", new Greeting());
+        return "hello";
+    }
+
+    @PostMapping("/greeting")
+    public String greetingSubmit(@ModelAttribute Greeting greeting, Model model) {
+        return "hello";
     }
 }
